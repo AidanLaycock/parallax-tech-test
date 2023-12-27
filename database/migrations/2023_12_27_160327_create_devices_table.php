@@ -22,8 +22,8 @@ return new class extends Migration
             $table->text('model');
             $table->dateTime('install_date');
             $table->longText('note');
-            $table->string('eui');
-            $table->string('serial_number');
+            $table->text('eui');
+            $table->text('serial_number');
             $table->timestamps();
         });
     }
