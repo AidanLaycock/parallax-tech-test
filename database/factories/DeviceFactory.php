@@ -17,13 +17,13 @@ class DeviceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(),
+            'name' => fake()->sentence(),
             'address' => fake()->address(),
             'longitude' => fake()->longitude(),
             'latitude' => fake()->latitude(),
             'device_type' => fake()->word(),
             'manufacturer' => fake()->word(),
-            'model' => fake()->words(),
+            'model' => fake()->sentence(),
             'install_date' => fake()->dateTimeBetween('-2 years', 'now'),
             'note' => fake()->paragraph(),
             'eui' => fake()->word(),
