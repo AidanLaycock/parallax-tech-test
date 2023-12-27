@@ -59,13 +59,14 @@ export default function Dashboard({ auth }: PageProps) {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">API Tokens</div>
                         <div className="flex flex-col space-y-3 p-6">
-                        {auth.user.tokens && auth.user.tokens.length > 0 ? auth.user.tokens.map(token => {
-                            return (
-                                <div>
-                                    <p className="text-gray-900 dark:text-gray-100">{token.name}</p>
-                                </div>
+                        {auth.user.tokens && auth.user.tokens.length > 0 ? auth.user.tokens.map(token => (
+                            <div>
+                                <p className="text-gray-900 dark:text-gray-100">{token.name}</p>
+                            </div>
                             )
-                        }) : (<p className="text-gray-900 dark:text-gray-100">You don't have any tokens.</p>)}
+                        ) : (
+                            <p className="text-gray-900 dark:text-gray-100">You don't have any tokens.</p>)
+                        }
                         </div>
                         
                         <div className="p-6"><PrimaryButton onClick={() =>setGenerateNewAPIKey(true)}>Generate new API Key</PrimaryButton>                        </div>
