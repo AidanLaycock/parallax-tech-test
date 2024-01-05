@@ -14,7 +14,7 @@ class DeviceAPIController extends Controller
      */
     public function index()
     {
-        return Response(['devices' => Device::all()]);
+        return Response(['devices' => Device::paginate(50)]);
     }
 
     /**

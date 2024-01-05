@@ -3,7 +3,7 @@
 use App\Models\Device;
 use App\Models\User;
 
-test('a user can retrieve all devices', function(): void {
+test('a user can retrieve all devices (single page)', function(): void {
     $user = User::factory()->create();
 
     $devices = Device::factory(5)->create();
@@ -15,6 +15,21 @@ test('a user can retrieve all devices', function(): void {
     $response->assertOk();
 
     $this->expect(count($response->getOriginalContent()['devices']))->toBe(5);
+});
+
+test('a user can retrieve all devices, in paginated format', function(): void {
+    $user = User::factory()->create();
+
+    $devices = Device::factory(101)->create();
+    $this->assertDatabaseCount('devices', 101);
+
+    $response = $this->actingAs($user)
+                     ->get(route('device.index'));
+
+    $response->assertOk();
+
+    $this->expect($response['devices']['last_page'])->toBe(3);
+    $this->expect($response['devices']['total'])->toBe(101);
 });
 
 test('a user can retrieve a single device record', function (): void {
@@ -40,8 +55,6 @@ test('a user can create a new device', function (): void {
 
     $this->assertDatabaseCount('devices', 1);
 });
-
-// Add a test to ensure that all required data MUST be included!
 
 test('a user can update a device', function(): void {
     $user = User::factory()->create();
