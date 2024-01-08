@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Device extends Model
 {
@@ -25,7 +26,8 @@ class Device extends Model
         'install_date',
         'note',
         'eui',
-        'serial_number'
+        'serial_number',
+        'import_id'
     ];
 
     /**
@@ -36,4 +38,9 @@ class Device extends Model
     protected $casts = [
         'install_date' => 'datetime',
     ];
+
+    public function import(): HasOne
+    {
+        return $this->HasOne(Import::class, 'id', 'import_id');
+    }
 }
