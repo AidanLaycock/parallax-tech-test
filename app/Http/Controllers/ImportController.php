@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreImportRequest;
 use App\Models\Import;
 
+
+use App\Imports\DevicesImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ImportController extends Controller
 {
     /**
@@ -28,7 +32,11 @@ class ImportController extends Controller
      */
     public function store(StoreImportRequest $request)
     {
-        //
+        $import = Excel::import(new DevicesImport, $request->validated('file'));
+        
+        return response()->json([
+            'message' => 'File imported successfully.'
+        ]);
     }
 
     /**

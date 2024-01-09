@@ -1,13 +1,14 @@
 <?php
 
 use App\Models\User;
+use App\Models\Device;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 test('a user can upload an importable CSV file', function (): void {
+    Excel::fake();
+    
     $user = User::factory()->create();
-
-    Storage::fake('csv-uploads');
 
     $csv = UploadedFile::fake()->create('data-upload.csv', 1000);
 
@@ -16,7 +17,7 @@ test('a user can upload an importable CSV file', function (): void {
 
     $response->assertOk();
 
-    Storage::disk('csv-uploads')->assertExists($csv->hashName());
+    Excel::assertImported('data-upload.csv');
 });
 
 test('a user can delete an upload and devices will be removed automatically', function(): void {
