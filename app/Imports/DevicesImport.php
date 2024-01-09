@@ -10,6 +10,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class DevicesImport implements ToModel, WithHeadingRow
 {
+    protected number $import_id;
+
+    public function __constructor($import_id)
+    {
+        $this->import_id = $import_id;
+    }
+
     /**
     * @param array $row
     *
@@ -28,7 +35,8 @@ class DevicesImport implements ToModel, WithHeadingRow
             'install_date' => Carbon::createFromFormat('m/d/Y', $row['install_date']), //$row['install_date'], 
             'note' => $row['notes'],
             'eui' => $row['eui'],
-            'serial_number' => $row['serial_number']
+            'serial_number' => $row['serial_number'],
+            'import_id' => $this->import_id
         ]);
     }
 }

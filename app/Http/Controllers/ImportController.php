@@ -42,7 +42,7 @@ class ImportController extends Controller
             ]
         );
 
-        $devices = Excel::import(new DevicesImport, $request->validated('file'));
+        $devices = Excel::import(new DevicesImport($import->id), $request->validated('file'));
 
         $import->update([
             'completed_at' => Carbon::now()
