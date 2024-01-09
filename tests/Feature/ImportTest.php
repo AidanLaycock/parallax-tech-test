@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Import;
+use App\Models\Device;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,9 +30,34 @@ test('a user can upload an importable CSV file', function (): void {
 
     // File is saved to disk
     Storage::disk('local')->assertExists('data-upload.csv');
-
 });
 
 test('a user can delete an upload and devices will be removed automatically', function(): void {
+    Storage::fake('local');
 
+    $csv = UploadedFile::fake()->create('data-upload.csv', 1000);
+
+    Storage::put('to-be-deleted-devices.csv', $csv);
+
+    $user = User::factory()->create();
+
+    $import = Import::create([
+        'user_id' => $user->id,
+        'filename' => 'to-be-deleted-devices.csv'
+    ]);
+
+    $devices = Device::factory()->count(10)->create([
+        'import_id' => $import->id
+    ]);
+
+    $this->assertCount(10, Device::all());
+
+    $response = $this->actingAs($user)
+                     ->delete(route('import.destroy', ['import' => $import]));
+
+    $response->assertOk();
+
+    $this->assertCount(0, Device::all());
+
+    Storage::disk('local')->assertMissing('data-upload.csv');
 });

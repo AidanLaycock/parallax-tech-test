@@ -58,6 +58,12 @@ class ImportController extends Controller
      */
     public function destroy(import $import)
     {
-        //
+        $import->delete();
+
+        Storage::delete($import->filename);
+
+        return response()->json([
+            'message' => 'Import deleted successfully.'
+        ]);
     }
 }
