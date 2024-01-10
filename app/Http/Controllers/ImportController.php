@@ -13,31 +13,15 @@ use Illuminate\Support\Facades\Storage;
 class ImportController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreImportRequest $request)
     {
-        Storage::put($request->validated('file')->name, $request->validated('file'));
+        Storage::put($request->validated('file')->getClientOriginalName(), $request->validated('file'));
         
         $import = Import::create(
             [
-                'filename' => $request->validated('file')->name,
+                'filename' => $request->validated('file')->getClientOriginalName(),
                 'user_id' => Auth::user()->id
             ]
         );
@@ -48,8 +32,8 @@ class ImportController extends Controller
             'completed_at' => Carbon::now()
         ]);
 
-        return response()->json([
-            'message' => 'File imported successfully.'
+        return back()->with([
+            'message' => 'Import processed successfully!'
         ]);
     }
 

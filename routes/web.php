@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DeviceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,10 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/tokens/create', function (Request $request) {
         $token = $request->user()->createToken($request->token_name);
      
-        return ['newToken' => $token->plainTextToken];
+        return back()->with([
+            'message' => 'New token generated successfully: ' . $token->plainTextToken
+        ]);
     })->name('api-token.generate');
 
-    Route::resource('import', ImportController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::resource('import', ImportController::class)->only(['store', 'destroy']);
+    Route::get('/devices', [DeviceController::class, 'index'])->name('devices.index');
 });
 
 require __DIR__.'/auth.php';
