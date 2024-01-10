@@ -10,9 +10,9 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class DevicesImport implements ToModel, WithHeadingRow
 {
-    protected number $import_id;
+    protected int $import_id;
 
-    public function __constructor($import_id)
+    public function __construct(int $import_id)
     {
         $this->import_id = $import_id;
     }
