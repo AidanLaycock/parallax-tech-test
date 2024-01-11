@@ -6,9 +6,11 @@ use App\Models\Device;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 
-class DevicesImport implements ToModel, WithHeadingRow
+class DevicesImport implements ToModel, WithHeadingRow, WithChunkReading, shouldQueue
 {
     protected int $import_id;
 
@@ -32,11 +34,17 @@ class DevicesImport implements ToModel, WithHeadingRow
             'device_type' => $row['device_type'],
             'manufacturer' => $row['manufacturer'],
             'model' => $row['model'],
-            'install_date' => Carbon::createFromFormat('m/d/Y', $row['install_date']), //$row['install_date'], 
+            'install_date' => Carbon::createFromFormat('Y-m-d', $row['install_date']), //$row['install_date'], 
             'note' => $row['notes'],
             'eui' => $row['eui'],
             'serial_number' => $row['serial_number'],
             'import_id' => $this->import_id
         ]);
+    }
+
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }

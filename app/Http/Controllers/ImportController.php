@@ -33,7 +33,7 @@ class ImportController extends Controller
         ]);
 
         return back()->with([
-            'message' => 'Import processed successfully!'
+            'message' => 'Import submitted and added to the Queue Successfully! Please note large imports may take a little while, so check back soon!'
         ]);
     }
 

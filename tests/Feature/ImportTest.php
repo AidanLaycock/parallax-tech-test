@@ -22,6 +22,7 @@ test('a user can upload an importable CSV file', function (): void {
                      ->post(route('import.store'),  ['file' => $csv]);
 
     $response->assertOk();
+    $response->assertRedirect();
 
     Excel::assertImported('data-upload.csv');
 
