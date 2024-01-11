@@ -15,7 +15,7 @@ export default function Authenticated({
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
-    const { flash }: { flash: { message: string } } = usePage().props;
+    const { flash } = usePage().props;
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -182,7 +182,7 @@ export default function Authenticated({
                 </header>
             )}
 
-            {flash.message && (
+            {flash && flash.message && (
                 <div className="pt-8 pb-3">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">

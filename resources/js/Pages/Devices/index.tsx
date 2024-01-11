@@ -9,14 +9,20 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 
-export default function Devices({ auth, devices }: PageProps) {
+interface DevicesPageProps extends PageProps {
+    devices: any;
+}
+
+export default function Devices({ auth, devices }: DevicesPageProps) {
     const [showImportDevicesModal, setImportDevicesModal] = useState(false);
     const [showManageImportsModal, setManageImportsModal] = useState(false);
     const fileInput = useRef<HTMLInputElement>();
 
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const formData: { file: File | null } = {
         file: null,
-    });
+    };
+
+    const { setData, post, processing, reset, errors } = useForm(formData);
 
     const importDevices: FormEventHandler = (e) => {
         e.preventDefault();
@@ -117,7 +123,9 @@ export default function Devices({ auth, devices }: PageProps) {
                             type="file"
                             name="file"
                             ref={fileInput}
-                            onChange={(e) => setData("file", e.target.files[0])}
+                            onChange={(e) =>
+                                setData("file", e.target.files?.[0] || null)
+                            }
                             className="mt-1 block w-3/4"
                             isFocused
                         />
@@ -166,7 +174,9 @@ export default function Devices({ auth, devices }: PageProps) {
                             type="file"
                             name="file"
                             ref={fileInput}
-                            onChange={(e) => setData("file", e.target.files[0])}
+                            onChange={(e) =>
+                                setData("file", e.target.files?.[0] || null)
+                            }
                             className="mt-1 block w-3/4"
                             isFocused
                         />
