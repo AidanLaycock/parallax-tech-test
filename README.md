@@ -1,66 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Parallax Technical Test
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application to store and manage user devices.
 
-## About Laravel
+## Technology
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   [Laravel](https://laravel.com/]) (PHP),
+-   MySQL,
+-   [Inertia.js](https://inertiajs.com/)
+-   React,
+-   [TailwindCSS](https://tailwindcss.com/),
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Getting started
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prerequisites
 
-## Learning Laravel
+Before being able to run the project locally, you will need the following installed:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [Composer](https://getcomposer.org/),
+- PHP,
+- Node.js & NPM,
+- MySQL (Either in Docker or installed locally),
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installing the project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To install the project, you will need to clone the project from Github:
 
-## Laravel Sponsors
+```bash
+gh repo clone AidanLaycock/parallax-tech-test
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Once cloned, `cd` into the project and run `composer install`.
 
-### Premium Partners
+Once all of your php dependencies are installed, run:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+cp .env.example .env && php artisan key:generate
+```
 
-## Contributing
+You will need to add your database connection to your `.env` file.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Then you will need to run the migrations:
 
-## Code of Conduct
+```bash
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+You can then either setup [Laravel Valet](https://laravel.com/docs/10.x/valet) or use `php artisan serve` to serve your application. You will then be able to view your application (Either on localhost or on your valet custom .test domain).
 
-## Security Vulnerabilities
+## Running the Queue
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+To handle large file imports, this project leverages the Laravel Queue functionality.
 
-## License
+Ideally you will want to leverage the database or redis for your queue.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To run the Queue locally, you will need to run:
+
+```bash
+php artisan queue:work
+```
+
+This will then process file uploads as they are uploaded. You may see multiple rows of responses as larger files are uploaded, as uploads are split into chunks of 1000 devices at a time.
+
+## Getting Registered
+
+Once you have your site running locally, you will be able to register an account to import `.csv` files for devices or to generate an API key to use the API routes.
+
+To register an account, view the homepage and then click register in the top right hand corner. You will need to add a username, email and password to proceed.
+
+### Generating a new API Token
+
+Once registered & logged in, visit the dashboard (`/dashboard`), there you will be able to see the 'Generate New API Key' button, if you click this and enter a name for your key and then click create. You will be presented with a new API key
+
+> [!IMPORTANT]
+> Please note that the token will only be shown once, so make a secure copy of it before navigating from the page.
+
+Once you have generated an API key, you will be able to use it within software like Postman. 
+
+# API Documentation
+[View API documentation](./api-documentation)
+
+# Uploading devices via .csv
+
+To upload files to the site, you will need to be registered and logged in.
+
+Then visit the devices page (`/devices`), where you will be able to see a list of all devices in the database, as well as the Upload New Devices button.
+
+If you click on Upload New Devices, then you will be able to select a local file to upload.
+
+> [!NOTE]
+> Please note that imports are processed via the Queue, so will be processed in the background, so for large imports, you may not see your data instantly. Do make sure that your Queue is being run locally, otherwise you will not see your data on the site.
+
+## Running tests
+As part of the project, there is a small suite of automated tests. These tests leverage [PestPHP](https://pestphp.com/) syntax.
+
+To run tests:
+```bash
+php artisan test
+```
