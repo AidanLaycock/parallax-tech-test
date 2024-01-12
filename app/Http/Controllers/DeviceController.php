@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Device;
+use App\Models\Import;
 use Inertia\Inertia;
 
 class DeviceController extends Controller
@@ -14,7 +15,8 @@ class DeviceController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Devices/index', [
-            'devices' => Device::all()
+            'devices' => Device::all(),
+            'imports' => Import::all()
         ]);
     }
 }

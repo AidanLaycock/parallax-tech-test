@@ -46,7 +46,7 @@ class ImportController extends Controller
 
         Storage::delete($import->filename);
 
-        return response()->json([
+        return back()->with([
             'message' => 'Import deleted successfully.'
         ]);
     }

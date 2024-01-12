@@ -47,6 +47,8 @@ php artisan migrate
 
 You can then either setup [Laravel Valet](https://laravel.com/docs/10.x/valet) or use `php artisan serve` to serve your application. You will then be able to view your application (Either on localhost or on your valet custom .test domain).
 
+You will also need to run `npm run dev` or `npm run build` to build the javascript related assets.
+
 ## Running the Queue
 
 To handle large file imports, this project leverages the Laravel Queue functionality.
@@ -97,3 +99,8 @@ To run tests:
 ```bash
 php artisan test
 ```
+
+## Project next steps
+- Refine UX, particularly around device management and data tables,
+- Move imports into polymorphic relationship to enable better reuse if other data is also importable,
+- Improve API key management so that users can revoke keys as needed,
