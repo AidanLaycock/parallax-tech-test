@@ -1,6 +1,6 @@
 # API Documentation
 
-All api endpoints require authentication via API key, please see above to generate a new key. API keys should be sent as part of the `Authorization` header in your request.
+All api endpoints require authentication via API key, please see the readme to learn how to generate a new key. API keys should be sent as part of the `Authorization` header in your request.
 
 ## Devices api
 
@@ -132,6 +132,7 @@ The update `/api/device/{id}` api provides the following data in the response:
 {
     "device": {
         // Device data
+    }
 }
 ```
 ### Delete a Device
