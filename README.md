@@ -92,6 +92,15 @@ If you click on Upload New Devices, then you will be able to select a local file
 > [!NOTE]
 > Please note that imports are processed via the Queue, so will be processed in the background, so for large imports, you may not see your data instantly. Do make sure that your Queue is being run locally, otherwise you will not see your data on the site.
 
+# Removing an import
+
+> [!WARNING]
+> Please be aware that when removing an import it is not reversible, and you will need to reupload the `.csv` file to add your devices again.
+
+To remove imported devices that have been processed from a `.csv` file, you can visit the devices page, click manage imports. And then click Delete next to the relevant import you want to remove.
+
+Please note that for larger imports, you may need to refresh the page to see the full effects take place.
+
 ## Running tests
 As part of the project, there is a small suite of automated tests. These tests leverage [PestPHP](https://pestphp.com/) syntax.
 
