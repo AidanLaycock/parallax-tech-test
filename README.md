@@ -79,7 +79,7 @@ Once registered & logged in, visit the dashboard (`/dashboard`), there you will 
 Once you have generated an API key, you will be able to use it within software like Postman. 
 
 # API Documentation
-[View API documentation](./api-documentation)
+[View API documentation](./api-documentation.md)
 
 # Uploading devices via .csv
 
